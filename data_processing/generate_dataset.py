@@ -76,7 +76,7 @@ def extract_dataset(input_dir,output_dir):
             line = line.split(' ')
             line = list(filter(None, line))
             line = [i for i in line if len(i)!=0]
-            index.append(line[1]-1)
+            index.append(int(line[1])-1)
         vis_atom_feat = np.zeros(len(coords))
         for i in index:
             vis_atom_feat[i] = 1.0
