@@ -8,6 +8,7 @@ from scipy.spatial import cKDTree
 def extract_dataset(input_dir,output_dir):
     label_dir = os.path.join(output_dir,'label')
     feat_dir = os.path.join(output_dir,'feat')
+    nor_vis_8_dir = os.path.join(output_dir,'nor_vis8')
     edge_dir = os.path.join(output_dir,'edges')
     edge_water_dir = os.path.join(output_dir,'edges_water')
     if not os.path.exists(label_dir):
@@ -17,7 +18,9 @@ def extract_dataset(input_dir,output_dir):
     if not os.path.exists(edge_dir):
         os.mkdir(edge_dir)
     if not os.path.exists(edge_water_dir):
-        os.mkdir(edge_water_dir)    
+        os.mkdir(edge_water_dir) 
+    if not os.path.exists(nor_vis_8_dir):
+        os.mkdir(nor_vis_8_dir)
     ids = os.listdir(input_dir)
 
     for id in ids:
@@ -115,14 +118,16 @@ def extract_dataset(input_dir,output_dir):
         distance = np.where(distance>8,0,1)
         
         visgird_8A_feat = np.sum(distance, axis=1)
-        #max_value = np.sum(visgird_8A_feat)
-        #visgird_8A_feat = visgird_8A_feat/(max_value+1e-9)
+        max_value = np.sum(visgird_8A_feat)
+        nor_visgird_8A_feat = (visgird_8A_feat/(max_value+1e-9)).reshape(-1,1)
         visgird_8A_feat = visgird_8A_feat.reshape(-1,1)
 
         #combine all features
         feat = np.concatenate((vis_atom_feat,ghecom_feat,visgird_8A_feat),axis=1).reshape(-1,3)
-        print(feat.shape)
+        #print(feat.shape)
         np.save(os.path.join(feat_dir,str(id)+'.npy'),feat)
+        #save vis_8 feature
+        np.save(os.path.join(nor_vis_8_dir,str(id)+'.npy'),nor_visgird_8A_feat)
 
 
 
