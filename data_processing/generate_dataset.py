@@ -69,6 +69,7 @@ def extract_dataset(input_dir,output_dir):
         # running visgrid and prepare visgrid features
         tools_dir = './tools'
         vis_exe = os.path.join(tools_dir,'VisGrid/visgrid-alltaggedatoms')
+        os.system("chmod 777 "+ vis_exe)
         vis_pred = os.popen(vis_exe+ ' '+ pdb_write_path)
         index = []
         for line in vis_pred:
@@ -83,6 +84,7 @@ def extract_dataset(input_dir,output_dir):
 
         #running ghecom and prepare ghecom features
         ghecom_exe = os.path.join(tools_dir,'GHECOM/ghecom')
+        os.system("chmod 777 "+ ghecom_exe)
         ghecom_odir = os.path.join(output_dir,'ghecom_output')
         if not os.path.exists(ghecom_odir):
             os.mkdir(ghecom_odir)
