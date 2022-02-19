@@ -1,0 +1,523 @@
+<HTML>
+<TITLE>
+INSTRUCTION FOR PROGRAM GHECOM
+</TITLE>
+
+<BODY>
+
+<style>
+PRE {
+background-color : #E0E0E0;
+}
+CODE {
+background-color : #F0F0F0;
+font-size : 140%;
+}
+</style>
+
+<CENTER>
+<H3>
+Instruction for the "ghecom" program
+</H3>
+
+<A HREF="https://pdbj.org/ghecom"> https://pdbj.org/ghecom</A><BR> <BR>
+Takeshi Kawabata ( kawabata@protein.osaka-u.ac.jp ) <BR>
+2020/07/21
+<P>
+Laboratory of Protein Databases <BR>
+Institute for Protein Research, Osaka University<BR>
+Email:kawabata@protein.osaka-u.ac.jp<BR>
+<P>
+This software is released under
+the GNU Lesser General Public License (LGPL) version 3, see 
+<A HREF="https://www.gnu.org/licenses/lgpl-3.0.en.html" TARGET=_BLANK>https://www.gnu.org/licenses/lgpl-3.0.en.html</A> .
+</CENTER>
+
+<HR>
+<H4>[Installation]</H4>
+
+The source code of the ghecom is written in C, and developed and executed on
+the linux environment (actually on the Fedora Core).  For the installation,
+you need the gcc compiler.  If you do not want to use it, please change the
+"Makefile" in the "src" directory.
+
+<OL>
+ <LI> download the file "ghecom-src-[date].tar.gz" file.<P>
+
+ <LI> <CODE>tar zxvf ghecom-src-[date].tar.gz</CODE> <P>
+
+ <LI> <CODE>cd src</CODE><P>
+
+ <LI> <CODE>make</CODE> <P>
+</OL>
+
+If the sources is successfully compiled,  the execute file "ghecom"
+will appear in the "../src" directory.
+<HR>
+
+<P>
+<H4>[Summary of various spaces identified by ghecom program ]</H4>
+<TABLE BORDER="1">
+<TR>
+<TD>MODE(<code>-M</code>)</TD>
+<TD>Type</TD>
+<TD>Definition by Mathematical morphology</TD>
+<TD>Description</TD>
+</TR>
+
+<TR>
+<TD><A HREF="#P">P</A></TD>
+<TD><A HREF="#P">Pocket</A></TD>
+<TD> [(<I>X</I> <B>*</B> <I>P</I>) and <I>X</I><sup>c</sup> ] <B>o</B> <I>S</I> </TD>
+<TD>A small probe <I>S</I> can enter, but a large probe <I>P</I> cannot. </TD>
+</TR>
+
+<TR>
+<TD><A HREF="#M">M</A></TD>
+<TD><A HREF="#M">Multiscale-pocket</A></TD>
+<TD> argmin<sub><I>k</I></sub>  [(<I>X</I> <B>*</B> <I>P<sub>k</sub></I>) and <I>X</I><sup>c</sup>] <B>o</B> <I>S</I> </TD>
+<TD>
+Prepare <I>K</I> large probes {<I>P<sub>k</sub></I>}, 
+and calculate pocket for each large probe <I>P<sub>k</sub></I>: <BR>
+A small probe <I>S</I> can enter, but a large probe <I>P<sub>k</sub></I> cannot. </TD>
+</TR>
+
+<TR>
+<TD><A HREF="#V">V</A></TD>
+<TD><A HREF="#V">Cavity</A></TD>
+<TD> union<sup><I>K</I></sup><sub><I>k</I>=1</sub>[I<sub><I>X</I></sub>(<I>C</I><sub><I>k</I></sub>
+[<I>X<sup>c</sup></I> <B>-</B> <I>P</I>]) <B>+</B> <I>P</I>]</TD>
+<TD>A probe <I>P</I> cannot enter from outside. </TD>
+</TR>
+
+<TR>
+<TD ROWSPAN="2"><A HREF="#CP">CP</A></TD>
+<TD ROWSPAN="2"><A HREF="#CP">Cave pocket</A></TD>
+<TD> 
+((C<sub>out</sub>[(<I>X</I> <B>+</B> <I>P</I>)<sup>c</sup>] <B>+</B> <I>P</I>) or <I>X</I>)<sup>c</sup> o <I>S</I>
+</TD>
+<TD ROWSPAN="2">An internal probe <I>S</I> can enter, but an external probe <I>P</I> cannot enter from outside </TD>
+</TR>
+
+<TR>
+<TD>
+((C<sub>out</sub>[(<I>X</I> <B>*</B> <I>P</I>)<sup>c</sup> <B>-</B> <I>P</I>] <B>+</B> <I>P</I>)<sup>c</sup> and <I>X</I><sup>c</sup>) o <I>S</I>
+</TD>
+</TR>
+
+</TABLE>
+<P>
+Notation for mathematical morphology
+<TABLE BORDER="1">
+<TR> <TD><I>X</I></TD><TD> VdW volume of protein </TD></TR>
+<TR> <TD><I>P</I></TD><TD> large (external) probe  </TD></TR>
+<TR> <TD><I>S</I></TD><TD> small (internal) probe  </TD></TR>
+<TR> <TD><I>P</I><sub><I>k</I></sub></TD><TD> <I>k</I>-th large (external) probe  </TD> </TR>
+</TABLE>
+
+<TABLE BORDER="1">
+<TR> <TD><B>-</B></TD> <TD>erosion</TD> </TR>
+<TR> <TD><B>+</B></TD> <TD>dilation</TD></TR>
+<TR> <TD><B>*</B></TD> <TD>closing. <I>X</I> <B>*</B> <I>P</I> = (<I>X</I> <B>+</B> <I>P</I>) <B>-</B> <I>P</I></TD></TR>
+<TR> <TD><B>o</B></TD> <TD>opening. <I>X</I> <B>o</B> <I>P</I> = (<I>X</I> <B>-</B> <I>P</I>) <B>+</B> <I>P</I></TD></TR>
+<TR>
+<TD>I<sub><I>X</I></sub>[<I>Y</I>]</TD>
+<TD> return <I>Y</I> only if <I>Y</I> access to the outside around <I>X</I>, otherwise return nothing </TD>
+</TR>
+
+<TR> 
+<TD>C<sub><I>k</I></sub>[<I>Y</I>]</CODE></TD>
+<TD> <I>k</I>-th connected coponent of <I>Y</I></TD> 
+</TR>
+
+<TR> 
+<TD>C<sub>out</sub>[<I>Y</I>]</CODE></TD>
+<TD> The component of <I>Y</I> connected to the outside.</TD> 
+</TR>
+
+</TABLE>
+
+<HR>
+<H4>[How to use the ghecom program]</H4>
+
+<OL>
+<LI id='P'><B>Simple Pocket Detection (MODE='P')</B><P>
+A pocket is defined as a space where small probe <I>S</I> can enter, but a large probe <I>P</I> cannot. 
+<P>
+  <U>Standard Usage</U> <P>
+
+ <CODE>ghecom -M P -ipdb [input_pdbfile] -opocpdb [output_pocket_grid_pdbfile]</CODE><P>
+  
+  For example, to find the pocket for the pdbfile "3wz8":<P>
+
+ <CODE>ghecom -M P -ipdb pdb3wz8.ent -opocpdb 3wz8_pock.pdb</CODE><P>
+
+Options for input PDB file are summarized <A HREF="#options_input_pdb">elsewhere</A>.
+
+<P>
+Options for grid pocket calculation:<BR>
+<UL>
+ <LI><code>-gw</code>   : Grid width [0.800000]
+ <LI><code>-rs</code>   : Radius for small probe spheres [1.870000]
+ <LI><code>-rl</code>   : Radius for large probe spheres [6.000000]
+ <LI><code>-clus</code>: clustering pockets ('T' or 'F') [T]
+</UL> 
+
+<P>
+Options for output
+<UL>
+ <LI><code>-opocpdb</code>: Output file for Grid Points of Pocket in PDB[]<P>
+  If <CODE>-clus T</CODE>, the rank of clusters are described in residue number and model number in the PDB file. 
+ <P> 
+ <LI><code>-opocmap</code>: Output file for Pocket in 3D density map (*.map) []<P>
+  If <CODE>-clus F</CODE>, only one map is generated.  If <CODE>-clus T</CODE>, 
+each cluster is written in a separated map file.  For example, the options <CODE>-clus T</CODE> <CODE>-opocmap out.map</CODE> are assigned and 4 pocket clusters are identified, then the 4 files,
+<CODE>out_1.map</CODE>, 
+<CODE>out_2.map</CODE>, 
+<CODE>out_3.map</CODE>,  and
+<CODE>out_4.map</CODE> are generated. 
+<P>
+
+ <LI><code>-opdb</code> : Output receptor PDB file with Cluster Number[]
+</UL>
+
+<P>
+Options to obtain spherical (non-grid) probes:
+<UL>
+ <LI><code>-oprb</code>: Output PDB file for 3-contacting spherical probes []
+ <LI><code>-oprd</code>: Output PDB file for 3-contacting spherical probes in DOCK sphere format []
+</UL>
+
+<P>
+<TABLE BORDER="1">
+
+<TR>
+<TD> 
+<IMG SRC="IMG_3wx8/3wx8_IXV.jpg" WIDTH=300><BR>
+3wx8 chain A and the ligand IXV
+</TD>
+
+<TD> 
+<IMG SRC="IMG_3wx8/3wx8_P.jpg" WIDTH=300><BR>
+3wx8_P.pdb colored by model number
+</TD>
+
+<TD> 
+<IMG SRC="IMG_3wx8/3wx8_P_123map.jpg" WIDTH=300><BR>
+3wx8_P_1.map(red), 3wx8_P_2.map(green), <BR> and 3wx8_P_3.map(blue)
+</TD>
+</TR>
+
+<TR>
+<TD colspan="3">
+COMMAND: <CODE>ghecom -M P -ipdb pdb3wz8.ent -ch A -rs 1.87 -rl 10.0 -opocpdb 3wz8_P.pdb -opocmap 3wz8_P.map</CODE>
+<BR>
+rendered by <I>UCSF Chimera</I>
+</TD>
+</TR>
+
+</TABLE>
+
+<P>
+<LI id='M'><B>Multi-scale Pocket Detection (MODE='M')</B><P>
+A multi-scale pocket is defined using <I>K</I> large probes {<I>P<sub>k</sub></I>}.
+
+<P>
+ <U>Standard Usage</U><P>
+  
+ <CODE>ghecom -M M -ipdb [input_pdbfile] -opocpdb [output_multi_scale_pocket_grid_pdbfile]</CODE><P>
+ <CODE>ghecom -M M -ipdb [input_pdbfile] -opocpdb [output_multi_scale_pocket_grid_pdbfile] -opdb [out_receptor_file_with_Rinaccess]</CODE><P>
+ 
+  For example, to find the multi-scale pocket for the pdbfile "3wz8":<P>
+
+  <CODE>ghecom pdb3wz8.ent -M M -opoc 3wz8_multi_pock.pdb -opdb 3wz8_multi_recep.pdb</CODE><P>
+
+ Options for input PDB file are summarized <A HREF="#options_input_pdb">elsewhere</A>.
+ <P>
+ Other options are summarized as follows( A string in the blackets [] is the default value):
+<UL>
+ <LI><code>-gw</code>   : Grid width [0.800000]
+ <LI><code>-rs</code>   : Radius for small probe spheres [1.870000]
+ <LI><code>-rli</code>  : Radius for min_large probe spheres [2.000000]
+ <LI><code>-rlx</code>  : Radius for max_large probe spheres [10.000000]
+ <LI><code>-br</code>   : bin of large probe radius for MODE 'M' [0.500000]
+ <LI><code>-clus</code>: clustering pockets ('T' or 'F') [T]
+</UL> 
+<P>
+Output options as follows:
+<UL>
+ <LI><code>-opocpdb</code>: Output Pocket in PDB file[]. <BR>
+     Residue number and tFactor indicate the size of large probe (i in P[i]).
+     Chain ID and MODEL number indicate the index of the pocket clusters. <P>   
+ <LI><code>-opocmap</code>: Output Pocket in 3D density map file (*.map) []. <BR>
+     A density values indicate the size of large probe (i in P[i]). <P>
+ <LI><code>-opdb</code> : Output receptor PDB file[]<BR>
+    Pocketness are described as tFactor. <P>
+
+ <LI><code> -ores</code>: Output Rediue-based property file with calculated Rinaceess/Pocketness[]
+
+</UL>
+
+<P>
+ 
+ 
+If a user wants to calculate the Rinaccess(shallowness) value for binding ligands, following two options should be added.
+<UL>
+ <LI><code>-iligpdb</code> : Input ligand PDB file for Rinaccess calculation  (only for MODE 'M') []
+ <LI><code>-oligpdb</code> : Output ligand PDB file with calcualted Rinaccess (only for MODE 'M') []
+</UL>
+
+<P>
+Options to obtain spherical (non-grid) probes:
+<UL>
+ <LI><code>-oprb</code>: Output PDB file for 3-contacting spherical probes []
+ <LI><code>-oprd</code>: Output PDB file for 3-contacting spherical probes in DOCK sphere format []
+</UL>
+<P>
+
+<TABLE BORDER="1">
+<TR>
+
+<TD> 
+<IMG SRC="IMG_3wx8/3wx8_IXV.jpg" WIDTH=300><BR>
+3wx8 chain A and the ligand IXV
+</TD>
+
+<TD> 
+<IMG SRC="IMG_3wx8/3wx8_M.jpg" WIDTH=300><BR>
+3wx8_M.pdb colored by bfactor (depth)
+</TD>
+
+<TD> 
+<IMG SRC="IMG_3wx8/3wx8_M_rec.jpg" WIDTH=300><BR>
+3wx8_M_rec.pdb colored by bfactor (pocketness)
+</TD>
+
+<TD> 
+<IMG SRC="IMG_3wx8/3wx8_Mmap.jpg" WIDTH=300><BR>
+3wx8_M.map
+</TD>
+
+</TR>
+<TR>
+<TD colspan="4">
+COMMAND:
+<CODE>ghecom -M M -ipdb pdb3wz8.ent -ch A -opocpdb 3wz8_M.pdb -opocmap 3wz8_M.map -opdb 3wz8_M_rec.pdb -ores 3wx8_M_res.txt
+</CODE>
+<BR>
+rendered by <I>UCSF Chimera</I>
+</TD>
+</TR>
+</TABLE>
+
+<TABLE BORDER="1">
+<TR>
+<TD>
+<IMG SRC="IMG_3wx8/3wx8_M_pocketness.png" WIDTH=500><BR>
+Residue-based pocketness drawn from "3wx8_M_res.txt".<BR>
+red: 1st largest cluster, green:2nd largest cluster, blue 3rd largest cluster.
+</TD>
+</TR>
+</TABLE>
+
+<P>
+<LI id='V'><B>Cavity in the molecule (MODE='V')</B><P>
+
+   The "cavity" is difined as the space where a probe <I>P</I> cannot enter from outside.
+<P>
+Its standard usage is as follows: <P>
+
+  <CODE>ghecom -M V -ipdb [pdbfile] -rl [radius_of_probe] -opocpdb [cavity grid file in PDB]</CODE><P>
+ 
+ For example, to find the cavity for the water in the pdb "1mbd":<BR>
+  <CODE> ghecom -M V -ipdb pdb1mbd.ent -M V -rl 1.4 -gw 0.5 -opocpdb cavity_grid.pdb</CODE><P>
+ 
+ For another example, to find the big cavity for the GroEL/ES (PDBID:1aon):<BR>
+  <CODE> ghecom -M V -ipdb pdb1aon.ent -M V -rl 20  -gw 4.0 -opocpdb cavity_grid.pdb</CODE><P>
+
+Options for input PDB file are summarized <A HREF="#options_input_pdb">elsewhere</A>.
+
+Options for grid pocket calculation:<BR>
+<UL>
+ <LI><code>-gw</code>   : Grid width [0.800000]
+ <LI><code>-rs</code>   : Radius for small probe spheres [1.870000]
+ <LI><code>-rl</code>   : Radius for large probe spheres [6.000000]
+ <LI><code>-clus</code>: clustering pockets ('T' or 'F') [T]
+</UL> 
+
+<P>
+Options for outputs
+<UL>
+ <LI><code>-opocpdb</code>: Output Pocket in PDB file[]
+ <LI><code>-opocmap</code>: Output Pocket in 3D density map file (*.map) []
+ <LI><code>-opdb</code> : Output receptor PDB file with Cluster Number[]
+</UL>
+
+<P>
+
+
+<P>
+<LI id='CP'><B>Cave pocket (MODE='CP')</B><P>
+
+   The "cave pocket" is difined as the space where an internal probe <I>S</I> can enter, but an external probe <I>P</I> cannot enter from outside. 
+<P>
+Its standard usage is as follows: <P>
+
+  <CODE>ghecom -M CP -ipdb [pdbfile] -rl [radius_of_external_probe] -rs [radius_internal_robe] -opocpdb [cavity grid file in PDB]</CODE><P>
+ 
+ For example, to find the big innner pocket for the GroEL/ES (PDBID:1aon):<BR>
+  <CODE> ghecom -M CP -ipdb pdb1aon.ent -M CP -rl 25 -rs 10  -gw 4 -opocpdb pockgrid.pdb</CODE><P>
+
+ For another example, to find the small binding pocket for the AMP (PDBID:12as):<BR>
+ <CODE>ghecom -M CP -ipdb pdb12as.ent -ch A -gw 1.0 -rl 3 -rs 1.87  -opocpdb poc.pdb</CODE>
+<P>
+The options for the cavepocket are quite similar to <A HREF="#P">those for the pocket</A>. <P>
+Options for input PDB file are summarized <A HREF="#options_input_pdb">elsewhere</A>.
+
+<P>
+Options for grid pocket calculation:<BR>
+<UL>
+ <LI><code>-gw</code>   : Grid width [0.800000]
+ <LI><code>-rs</code>   : Radius for small probe spheres [1.870000]
+ <LI><code>-rl</code>   : Radius for large probe spheres [6.000000]
+ <LI><code>-clus</code>: clustering pockets ('T' or 'F') [T]
+</UL> 
+<P>
+<P>
+Options for outputs:
+<UL>
+ <LI><code>-opocpdb</code>: Output Pocket in PDB file[]
+ <LI><code>-opocmap</code>: Output Pocket in 3D density map file (*.map) []
+ <LI><code>-opdb</code> : Output receptor PDB file with Cluster Number[]
+</UL>
+
+<P>
+
+
+<TABLE BORDER="1">
+<TR>
+<TD> 
+<IMG SRC="IMG_1aon/1aon_Vpdb.jpg" WIDTH=200><BR>
+Cavity:Rlarge=20 [1aon_V.pdb]
+</TD>
+
+<TD> 
+<IMG SRC="IMG_1aon/1aon_Vmap.jpg" WIDTH=200><BR>
+Cavity:Rlarge=20, [1aon_V.map]
+</TD>
+</TR>
+
+<TR>
+<TD colspan="2">
+COMMAND:
+<CODE>ghecom -M V  -ipdb pdb1aon.ent -gw 4.0 -rl 20        -clus F -opocpdb 1aon_V.pdb  -opocmap 1aon_V.map</CODE>
+</CODE>
+</TD>
+</TR>
+
+
+<TR>
+<TD> 
+<IMG SRC="IMG_1aon/1aon_Ppdb.jpg" WIDTH=200><BR>
+Pocket:Rlarge=25, Rsmall=10 [1aon_P.pdb]
+</TD>
+
+<TD> 
+<IMG SRC="IMG_1aon/1aon_Pmap.jpg" WIDTH=200><BR>
+Pocket:Rlarge=25, Rsmall=10 [1aon_P.map]
+</TD>
+</TR>
+
+<TR>
+<TD colspan="2">
+COMMAND:<CODE>ghecom -M P  -ipdb pdb1aon.ent -gw 4.0 -rl 25 -rs 10 -clus F -opocpdb 1aon_P.pdb  -opocmap 1aon_P.map</CODE>
+</TD>
+</TR>
+
+
+<TR>
+<TD> 
+<IMG SRC="IMG_1aon/1aon_CPpdb.jpg" WIDTH=200><BR>
+Cave Pocket:Rlarge=25, Rsmall=10 [1aon_CP.pdb]
+</TD>
+
+<TD> 
+<IMG SRC="IMG_1aon/1aon_CPmap.jpg" WIDTH=200><BR>
+Cave Pocket:Rlarge=25, Rsmall=10 [1aon_CP.map]
+</TD>
+</TR>
+<TR>
+<TD colspan="2">
+COMMAND:<CODE>ghecom -M CP -ipdb pdb1aon.ent -gw 4.0 -rl 25 -rs 10 -clus F -opocpdb 1aon_CP.pdb -opocmap 1aon_CP.map</CODE>
+<BR>
+rendered by <I>UCSF Chimera</I>
+</TD>
+</TR>
+</TABLE>
+</OL>
+
+<P>
+<HR>
+<H4>
+[Common options for GHECOM]
+</H4>
+<UL>
+<LI id="options_input_pdb"><B>Options for input PDB file</B><BR>
+ <UL>
+ <LI><code>-ipdb</code> : input PDB   file []
+ <LI><code>-icif</code> : input mmCIF file []
+ <LI><code>-ch</code>   : ChainID for target pdbfile [-]
+ <LI><code>-atmhet</code>: Read only ATOM 'A', only HETATM 'H', both 'B' [A]
+ <LI><code>-hetpep2atm</code> : Change HETATM residues with N_CA_C_O to ATOM ('T' or 'F') [T]
+ <LI><code>-asym_id</code>: asym_id for target pdbfile (only for -icif) []
+ <LI><code>-assembly</code>: assembly_id for mmCIF file (only for -icif) []
+ <LI><code>-rvdw</code> : vwRadius type for input PDB    file     'C'hothia1976 'B'ondi1964, 'O'ccupancy, 'U'nified [C]<BR>
+     If <code>-rvdw O</code> is assigned, radius is taken from Occupancy value in PDB file.
+ </UL>
+<LI id="options_output"><B>Options for outputs</B><BR>
+ <UL>
+  <LI><code>-ovdwpdb</code> : Output VdW protein 3D grid PDB file
+  <LI><code>-ovdwmap</code> : Output VdW protein 3D density map file
+ </UL>
+
+
+</UL>
+
+
+<HR>
+<H4>
+[References]
+</H4>
+<UL>
+
+<LI> Kawabata T. Detection of multi-scale pockets on protein surfaces using mathematical morphology. 
+  Proteins, 2010,78, 1195-1121.
+<A HREF= "https://www.ncbi.nlm.nih.gov/pubmed/19938154" TARGET=_BLANK>[PubMed]</A>
+<BR>
+ (The primary article to be cited for using the program "ghecom".)
+
+<P>
+<LI> Kawabata T, Go N.  Detection of pockets on protein surfaces using small and large probe spheres 
+to find putative ligand binding sites. Proteins, 2007, 68,516-529.
+<A HREF="https://www.ncbi.nlm.nih.gov/pubmed/17444522" TARGET=_BLANK>[PubMed]</A>
+<BR>
+(This article is the reference of the "phecom" program. The basic pocket idea using small and large probes is described in this article.)
+
+<P>
+<LI> Kawabata T.
+Detection of cave pockets in large molecules: Spaces into which internal probes can enter, but external probes from outside cannot.
+Biophys Physicobiol. 2019; 16: 391-406. 
+<A HREF="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6975925/" TARGET=_BLANK>[PubMed]</A>
+
+<P>
+<LI> Masuya M, Doi J. Detection and geometric modeling of molecular surfaces and cavities using digital mathmatical
+  morphological operations.  Journal of Molecular Graphics, Vol 13, 331-336, (1995)
+<A HREF="https://www.ncbi.nlm.nih.gov/pubmed/8820301" TARGET=_BLANK>[PubMed]</A> <BR>
+( The algorithm using mathematical morphology with small and large probes is firstly proposed by this article.)
+<P>
+<LI> Pettersen EF, Goddard TD, Huang CC, Couch GS, Greenblatt DM, Meng EC, Ferrin TE. J Comput Chem. 2004 Oct;25(13):1605-12.  UCSF Chimera--a visualization system for exploratory research and analysis. 
+ 
+</UL>
+<HR>
+</BODY>
+</HTML>

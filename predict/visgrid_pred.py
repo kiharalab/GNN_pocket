@@ -20,7 +20,7 @@ def visgrid_pred(bad_case,params):
         os.mkdir(vis_pdb_dir)
     if not os.path.exists(output_vis_dir):
         os.mkdir(output_vis_dir)
-    tools_dir = '../tools'
+    tools_dir = './tools'
     vis_pred_exe = os.path.join(tools_dir,'VisGrid/VisGrid')
     os.system("chmod 777 "+ vis_pred_exe)
     for id in bad_case:

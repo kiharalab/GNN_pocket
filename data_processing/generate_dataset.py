@@ -67,7 +67,7 @@ def extract_dataset(input_dir,output_dir):
         pqr2pdb(path,pdb_write_path)
 
         # running visgrid and prepare visgrid features
-        tools_dir = '../tools'
+        tools_dir = './tools'
         vis_exe = os.path.join(tools_dir,'VisGrid/visgrid-alltaggedatoms')
         vis_pred = os.popen(vis_exe+ ' '+ pdb_write_path)
         index = []

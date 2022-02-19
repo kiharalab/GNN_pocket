@@ -1,0 +1,272 @@
+<HTML>
+<TITLE>
+INSTRUCTION FOR PROGRAM GHECOM
+</TITLE>
+
+<BODY>
+
+<style>
+PRE {
+background-color : #E0E0E0;
+}
+CODE {
+background-color : #F0F0F0;
+}
+</style>
+
+<CENTER>
+<H3>
+Instruction for the "ghecom" program
+</H3>
+
+<A HREF="https://pdbj.org/ghecom"> https://pdbj.org/ghecom</A><BR> <BR>
+Takeshi Kawabata ( kawabata@protein.osaka-u.ac.jp ) <BR>
+2018/06/15
+<P>
+Laboratory of Protein Databases <BR>
+Institute for Protein Research, Osaka University<BR>
+Email:kawabata@protein.osaka-u.ac.jp<BR>
+<P>
+This software is released under
+the GNU Lesser General Public License (LGPL) version 3, see 
+<A HREF="https://www.gnu.org/licenses/lgpl-3.0.en.html" TARGET=_BLANK>https://www.gnu.org/licenses/lgpl-3.0.en.html</A> .
+</CENTER>
+
+<HR>
+<H4>[Installation]</H4>
+
+The source code of the ghecom is written in C, and developed and executed on
+the linux environment (actually on the Fedora Core).  For the installation,
+you need the gcc compiler.  If you do not want to use it, please change the
+"Makefile" in the "src" directory.
+
+<OL>
+ <LI> download the file "ghecom-src-[date].tar.gz" file.<P>
+
+ <LI> <CODE>tar zxvf ghecom-src-[date].tar.gz</CODE> <P>
+
+ <LI> <CODE>cd src</CODE><P>
+
+ <LI> <CODE>make</CODE> <P>
+</OL>
+
+If the sources is successfully compiled,  the execute file "ghecom"
+will appear in the "../src" directory.
+<HR>
+
+<P>
+<H4>[How to use the ghecom program]</H4>
+<OL>
+<LI><B>Simple Pocket Detection (MODE=='P')</B><P>
+
+ > Standard Usage < <P>
+
+ <CODE>ghecom [input_pdbfile] -M P -opoc [output_pocket_grid_pdbfile]</CODE><P>
+  
+  For example, to find the pocket for the pdbfile "1epr":<P>
+
+ <CODE>ghecom pdb1epr.ent -M P -opoc 1epr_pock.pdb</CODE><P>
+
+  ## Pocket is defined as :
+
+  <CODE> [(X cls P) and not X ] opn S. </CODE> <P>
+
+  where:
+   <CODE>X</CODE>  : protein region,
+   <CODE>P</CODE>  : large probe,
+   <CODE>S</CODE>  : small probe,
+   <CODE>cls</CODE>: closing,
+   <CODE>opn</CODE>: opening.
+
+ <P>
+ Other options are summarized as follows:( A string in the blackets [] is the default value) <P>
+ <UL>
+ <LI>-ch   : ChainID for target pdbfile [-]
+ <LI>-ah   : Read only ATOM 'A', only HETATM 'H', both 'B' [A]
+ <LI>-gw   : Grid width [0.800000]
+
+ <LI>-rs   : Radius for small probe spheres [1.870000]
+ <LI>-rl   : Radius for large probe spheres [6.000000]
+
+ <LI>-opdb : Output receptor PDB file with Cluster Number[]
+ 
+ ## If a user wants to obtain spherical (not-grid) probes, 
+    one of the following two options should be added.
+
+ <LI>-oprb: Output PDB file for 3-contacting spherical probes []
+ <LI>-oprd: Output PDB file for 3-contacting spherical probes in DOCK sphere format []
+ </UL>
+
+<P>
+<LI><B>Multi-scale Pocket Detection (MODE=='M')</B><P>
+
+ > Standard Usage <
+  
+ <CODE>ghecom [input_pdbfile] -M M -opoc [output_multi_scale_pocket_grid_pdbfile]</CODE><P>
+ <CODE>ghecom [input_pdbfile] -M M -opoc [output_multi_scale_pocket_grid_pdbfile] -opdb [out_receptor_file_with_Rinaccess]</CODE><P>
+ 
+  For example, to find the multi-scale pocket for the pdbfile "1epr":<P>
+
+  <CODE>ghecom pdb1epr.ent -M M -opoc 1epr_multi_pock.pdb -opdb 1epr_multi_recep.pdb</CODE><P>
+
+ The i-th pocket <CODE>pocket[i]</CODE> is defined using the i-th probe <CODE>P[i]</CODE> as :<P>
+
+  <CODE> 
+    pocket[i] = [(X cls P[i]) and not X ] opn S.
+  </CODE><P>
+
+
+ Other options are summarized as follows( A string in the blackets [] is the default value):
+
+ <UL>
+ <LI>-ch  : ChainID for target pdbfile [-]
+ <LI>-ah  : Read only ATOM 'A', only HETATM 'H', both 'B' [A]
+ <LI>-gw  : Grid width [0.800000]
+
+ <LI>-rli : Radius for min_large probe spheres [2.000000]
+ <LI>-rlx : Radius for max_large probe spheres [10.000000]
+ <LI>-br  : bin of large probe radius for MODE 'M' [0.500000]
+
+ <LI>-omap: Output CCP4 style 3D density map[]
+ <LI>-opdb: Output receptor PDB file with Rinacess/Pocketness []
+ <LI>-ores: Output Rediue based file with calculated Rinaceess/Pocketness[]
+
+ ## If a user wants to calculate the Rinaccess(shallowness) value for binding ligands, 
+    following two options should be added.
+
+ <LI>-ilg : Input ligand PDB file for Rinaccess calculation  (only for MODE 'M')[]
+ <LI>-olg : Output ligand PDB file with calcualted Rinaccess (only for MODE 'M')[]
+
+
+ ## If a user wants to obtain spherical (not-grid) probes, 
+    one of the following two options should be added.
+
+ <LI>-oprb: Output PDB file for 3-contacting spherical probes []
+ <LI>-oprd: Output PDB file for 3-contacting spherical probes in DOCK sphere format []
+
+ </UL>
+
+<P>
+<LI><B>Interface pocket between two chains (MODE=='I')</B><P>
+
+  > Standard Usage < <P>
+
+  <CODE>ghecom -M I -ipA [input_pdbfileA] -ipB [input_pdbfileB] -opo [output_interface_pocket_grid_pdbfile] -opdb [output_pdb_file]</CODE><P>
+
+  For example, to find the interface pocket between chains 'A' and 'B' 
+  of the pdb file "1bmd"  for the water molecule (rs = 1.4 angstrom):<P>
+
+  <CODE>ghecom -M I -ipA pdb1bmd.ent -chA A -ipB pdb1bmd.ent -chB B -rs 1.4 -opo inter_pocket.pdb</CODE><P>
+
+# Interface pocket is defined as :<P>
+
+   <CODE>[(A or B) cls P - A cls P  - B cls P] opn S.</CODE><P>
+  where
+
+   <CODE>A</CODE>  : protein region A, 
+   <CODE>B</CODE>  : protein region B, 
+   <CODE>P</CODE>  : large probe, 
+   <CODE>S</CODE> : small probe, 
+   <CODE>cls</CODE>: closing, 
+   <CODE>opn</CODE>: opening.
+ <P>
+In the pdbfile generated by '-opdb', atoms contacted with the interface pocket have non-zero tFactor values. 
+
+<P>
+Other options are summarized as follows:( A string in the blackets [] is the default value):
+ <UL>
+  <LI>-rs   : Radius for small probe spheres [1.870000]
+  <LI>-rl   : Radius for large probe spheres [6.000000]
+  <LI>-gw   : Grid width [0.800000]
+  <LI>-ipA  : Input pdb file A []
+  <LI>-ipB  : Input pdb file B []
+  <LI>-chA  : ChainID for pdb file A [-]
+  <LI>-chB  : ChainID for pdb file B [-]
+ </UL>
+
+<P>
+<LI><B>Cavity in the molecule (MODE='V')</B><P>
+
+   The "cavity" is difined as the space surrounded by the protein for the probe.
+   The probes are trapped and cannot escape from the "cavity".
+
+   The "cavity" is defined using the single probe <CODE>P</CODE>, as:<P>
+
+      <CODE>not [(X cls P)] and not (outer_space)</CODE><P>
+  
+  where 
+      <CODE>X</CODE>          : protein region,
+      <CODE>P</CODE>           :  probe,
+      <CODE>cls</CODE>         : closing,
+      <CODE>outer_space</CODE> :  the region connected to the outer boundaries of 3D grids.
+  <P>
+
+Its standard usage is as follows: <P>
+
+  <CODE>ghecom [pdbfile] -M V -rs [radius_of_probe] -opo [cavity grid file in PDB]</CODE><P>
+ 
+
+ For example, to find the cavity for the water in the pdb "1mbd":
+
+  <CODE> ghecom pdb1mbd.ent -M V -rs 1.4 -gw 0.5 -opo cavity_grid.pdb</CODE><P>
+ 
+ For another example, to find the big cavity for the substrate protein, in the proteasome (PDBID:1g65):
+
+   <CODE>ghecom pdb1g65.ent -M V -rs 5.0 -gw 2.0 -opo cavity_grid.pdb</CODE><P>
+
+
+<LI><B>Eroded Pocket (MODE='e')</B><P>
+
+   The 'eroded pocket' is a slightly shrinked pocket from the standard pocket.
+   It is defined as follows: <P>
+
+  <CODE>
+   StandardPocket =  [(X cls P) and not X ] opn S.  =  ([(X cls P) and not X ] -S ) + S 
+  </CODE>
+  <P>
+  <CODE>
+   ErodedPocket   =  ([(X cls P) and not X ] -S ) =  StandardPocket - S
+  </CODE>
+  <P>
+
+   This "eroded pocket" is useful to define clusters of pockets regions with
+   more rigorous condition.
+   <P>
+   Other options are similar to those of MODE='P'.
+</OL>
+
+<P>
+<HR>
+<H4>
+[References for GHECOM]
+</H4>
+<UL>
+
+<LI> Kawabata T. Detection of multi-scale pockets on protein surfaces using mathematical morphology. 
+  Proteins, 2010,78, 1195-1121.
+<A HREF= "https://www.ncbi.nlm.nih.gov/pubmed/19938154" TARGET=_BLANK>[PubMed]</A>
+<BR>
+ (The primary article to be cited for using the program "ghecom".)
+
+<P>
+<LI> Kawabata T, Go N.  Detection of pockets on protein surfaces using small and large probe spheres 
+to find putative ligand binding sites. Proteins, 2007, 68,516-529.
+<A HREF="https://www.ncbi.nlm.nih.gov/pubmed/17444522" TARGET=_BLANK>[PubMed]</A>
+<BR>
+(This article is the reference of the "phecom" program. The basic pocket idea using small and large probes is described in this article.)
+
+
+<P>
+<P>
+<LI> Masato Masuaya and Junta Doi "Detection and geometric modeling
+  of molecular surfaces and cavities using digital mathmatical
+  morphological operations"
+ Journal of Molecular Graphics, Vol 13, 331-336, (1995)
+<A HREF="https://www.ncbi.nlm.nih.gov/pubmed/8820301" TARGET=_BLANK>[PubMed]</A> <BR>
+( The algorithm using mathematical morphology with small and large probes is firstly proposed by this article.)
+</UL>
+
+
+<HR>
+</BODY>
+</HTML>

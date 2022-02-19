@@ -1,0 +1,45 @@
+echo "./mkrasscr.py -nc 20 -col RW"
+background white
+set specular true
+select protein && temperature==0
+color [255,0,0]
+select protein && (temperature>=0 && temperature<50)
+color [255,12,12]
+select protein && (temperature>=50 && temperature<100)
+color [255,25,25]
+select protein && (temperature>=100 && temperature<150)
+color [255,38,38]
+select protein && (temperature>=150 && temperature<200)
+color [255,51,51]
+select protein && (temperature>=200 && temperature<250)
+color [255,63,63]
+select protein && (temperature>=250 && temperature<300)
+color [255,76,76]
+select protein && (temperature>=300 && temperature<350)
+color [255,89,89]
+select protein && (temperature>=350 && temperature<400)
+color [255,102,102]
+select protein && (temperature>=400 && temperature<450)
+color [255,114,114]
+select protein && (temperature>=450 && temperature<500)
+color [255,127,127]
+select protein && (temperature>=500 && temperature<550)
+color [255,140,140]
+select protein && (temperature>=550 && temperature<600)
+color [255,153,153]
+select protein && (temperature>=600 && temperature<650)
+color [255,165,165]
+select protein && (temperature>=650 && temperature<700)
+color [255,178,178]
+select protein && (temperature>=700 && temperature<750)
+color [255,191,191]
+select protein && (temperature>=750 && temperature<800)
+color [255,204,204]
+select protein && (temperature>=800 && temperature<850)
+color [255,216,216]
+select protein && (temperature>=850 && temperature<900)
+color [255,229,229]
+select protein && (temperature>=900 && temperature<950)
+color [255,242,242]
+select protein && (temperature>=950 && temperature<1000)
+color [255,255,255]

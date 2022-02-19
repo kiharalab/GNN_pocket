@@ -1,0 +1,56 @@
+echo "./mkrasscr.py -nc 24 -of ../../out.ras -col WR -max 1500 -min 200"
+background white
+set specular true
+select protein && temperature<=200
+color [255,255,255]
+select protein && temperature>200 && temperature<=254
+color [255,244,244]
+select protein && temperature>254 && temperature<=308
+color [255,233,233]
+select protein && temperature>308 && temperature<=362
+color [255,223,223]
+select protein && temperature>362 && temperature<=417
+color [255,212,212]
+select protein && temperature>417 && temperature<=471
+color [255,201,201]
+select protein && temperature>471 && temperature<=525
+color [255,191,191]
+select protein && temperature>525 && temperature<=579
+color [255,180,180]
+select protein && temperature>579 && temperature<=633
+color [255,170,170]
+select protein && temperature>633 && temperature<=688
+color [255,159,159]
+select protein && temperature>688 && temperature<=742
+color [255,148,148]
+select protein && temperature>742 && temperature<=796
+color [255,138,138]
+select protein && temperature>796 && temperature<=850
+color [255,127,127]
+select protein && temperature>850 && temperature<=904
+color [255,116,116]
+select protein && temperature>904 && temperature<=958
+color [255,106,106]
+select protein && temperature>958 && temperature<=1012
+color [255,95,95]
+select protein && temperature>1012 && temperature<=1067
+color [255,85,85]
+select protein && temperature>1067 && temperature<=1121
+color [255,74,74]
+select protein && temperature>1121 && temperature<=1175
+color [255,63,63]
+select protein && temperature>1175 && temperature<=1229
+color [255,53,53]
+select protein && temperature>1229 && temperature<=1283
+color [255,42,42]
+select protein && temperature>1283 && temperature<=1338
+color [255,31,31]
+select protein && temperature>1338 && temperature<=1392
+color [255,21,21]
+select protein && temperature>1392 && temperature<=1446
+color [255,10,10]
+select protein && temperature>=1446
+color [255,0,0]
+select protein
+spacefill
+select all

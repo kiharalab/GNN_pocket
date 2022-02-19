@@ -1,0 +1,13 @@
+select all
+wireframe false
+select GRD
+spacefill 50
+color temperature
+select !GRD && ligand
+wireframe 50
+color cpk
+background white
+select protein
+color gray
+wireframe 50
+select

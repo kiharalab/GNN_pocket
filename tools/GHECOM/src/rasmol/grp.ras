@@ -1,0 +1,38 @@
+select all
+wireframe false
+select GRD
+spacefill 50
+color temperature
+select !GRD && ligand
+wireframe 50
+color cpk
+background white
+select GRD && 1
+color red
+select GRD && 2
+color pink 
+select GRD && 3
+color yellow 
+select GRD && 4
+color orange 
+select GRD && 5
+color green 
+select GRD && 6 
+color purple 
+select GRD && 7 
+color gold 
+select GRD && 8 
+color skyblue 
+select GRD && 9 
+color cyan 
+select GRD && 10,15,20,25
+color blue 
+select GRD && 11,16,21,26
+color white 
+select GRD && 12,17,22,27
+color gray 
+select GRD && 13,18,23,28
+color brown 
+select GRD && 14,19,24,29
+color cyan 
+select

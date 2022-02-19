@@ -1,0 +1,39 @@
+echo "<gridsize.ras>"
+echo " coded by T.Kawabata. LastModified:Feb 11, 2009"
+echo " coloring multi-scale molecular volume / pocket ghecom grid pdb data"
+echo " <=3.0:red     <=4.0 :redorange   <=5.0:orange"
+echo " <=6.0:yellow  <=7.0 :green       <=8.0:cyan"
+echo " >=9.0:blue    others:gray"
+
+background white
+set specular true
+wireframe false
+select GRD
+wireframe false
+color blue 
+spacefill 50 
+select GRD and temperature<=900
+color blue 
+spacefill 60 
+select GRD and temperature<=800
+color cyan 
+spacefill 70 
+select GRD and temperature<=700
+color green 
+spacefill 80 
+select GRD and temperature<=600
+color yellow 
+spacefill 90 
+select GRD and temperature<=500
+color orange 
+spacefill 100 
+select GRD and temperature<=400
+color redorange 
+spacefill 110 
+select GRD and temperature<=300
+color red
+spacefill 120 
+select GRD and temperature==0
+color gray 
+spacefill 120 
+select

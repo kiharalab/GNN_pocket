@@ -1,0 +1,4 @@
+#2020/07/21
+ghecom -M V  -ipdb pdb1aon.ent -gw 4.0 -rl 20        -clus F -opocpdb 1aon_V.pdb  -opocmap 1aon_V.map
+ghecom -M P  -ipdb pdb1aon.ent -gw 4.0 -rl 25 -rs 10 -clus F -opocpdb 1aon_P.pdb  -opocmap 1aon_P.map
+ghecom -M CP -ipdb pdb1aon.ent -gw 4.0 -rl 25 -rs 10 -clus F -opocpdb 1aon_CP.pdb -opocmap 1aon_CP.map

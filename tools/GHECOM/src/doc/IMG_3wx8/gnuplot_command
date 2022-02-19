@@ -1,0 +1,6 @@
+#2020/07/21
+plot "3wx8_M_res.txt" u 1:9 w l,"3wx8_M_res.txt" u 1:10 w l,"3wx8_M_res.txt" u 1:11 w l
+set xlabel "residue number"
+set ylabel "Pocketness[%]"
+set term png large
+

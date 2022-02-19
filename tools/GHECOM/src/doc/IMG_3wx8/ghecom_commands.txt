@@ -1,0 +1,4 @@
+#2020/07/21
+ghecom -M P -ipdb pdb3wz8.ent -ch A -rs 1.87 -rl 10.0 -opocpdb 3wz8_P.pdb -opocmap 3wz8_P.map
+ghecom -M M -ipdb pdb3wz8.ent -ch A -opocpdb 3wz8_M.pdb -opocmap 3wz8_M.map -opdb 3wz8_M_rec.pdb -ores 3wx8_M_res.txt
+

@@ -1,0 +1,53 @@
+CC	      = gcc
+
+CFLAGS	      = -O2 -g
+
+DEST	      = .
+
+EXTHDRS	      =
+
+HDRS	      = \
+
+INSTALL	      = /etc/install
+
+LD	      = gcc
+
+LDFLAGS	      = -O2 -g -lm
+
+LIBS	      = 
+
+MAKEFILE      = Makefile
+
+OBJS	      = ighecom.o\
+	        Radius.o\
+	        Amino.o\
+	        Grid3D.o\
+	        VecFunc.o\
+	        OpeMMorph.o\
+	        OpeStd3DPr.o\
+	        OpeClus3DPr.o\
+    	        PdbIO.o 
+
+PRINT	      = pr
+
+PROGRAM       = ../ighecom
+
+SHELL	      = /bin/sh
+
+SRCS	      = ighecom.c \
+	        Radius.c \
+	        Amino.c\
+	        Grid3D.c \
+	        VecFunc.c \
+	        OpeMMorph.c \
+	        OpeStd3DPr.c \
+	        OpeClus3DPr.c \
+	        HeapSort.c \
+    	        PdbIO.c
+
+all:		$(PROGRAM)
+
+$(PROGRAM):     $(OBJS) $(LIBS)
+		@echo "Linking $(PROGRAM) ..."
+		@$(LD) $(OBJS) $(LDFLAGS) $(LIBS)  -o $(PROGRAM)
+		@echo "done"

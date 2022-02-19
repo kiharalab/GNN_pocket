@@ -1,0 +1,31 @@
+echo "<protcolor.ras>"
+echo " coded by T.Kawabata. LastModified:Feb 11, 2009"
+echo " coloring multi-scale molecular volume / pocket ghecom grid pdb data"
+echo " <=3.0:red     <=4.0 :redorange   <=5.0:orange"
+echo " <=6.0:yellow  <=7.0 :green       <=8.0:cyan"
+echo " >=9.0:blue    others:gray"
+select
+background white
+set specular true
+wireframe false
+spacefill false
+select protein
+wireframe 100 
+color white 
+select protein and temperature>=300
+color [255,192,192] 
+select protein and temperature>=400
+color [255,160,160] 
+select protein and temperature>=500
+color [255,128,128] 
+select protein and temperature>=600
+color [255,96,96] 
+select protein and temperature>=700
+color [255,64,64] 
+select protein and temperature>=800
+color [255,32,32] 
+select protein and temperature>=1000
+color [255,0,0] 
+select protein and temperature==0
+color white 
+select
