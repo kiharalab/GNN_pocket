@@ -5,16 +5,9 @@ import numpy  as np
 from scipy.sparse import diags
 from utils.normalize import normalize
 from model.model import GCN
-from torch.utils.data import DataLoader,random_split
-from data_processing.dataset import MyDataset
-from utils.collate_fn import collate_fn
-from model.dice_loss import DiceLoss
-import time
-import pickle
 
 def predict(params):
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    #nfeat = params['feat_num']
 
     for i in [3,5,7,10]:
         model_path = "./ensemble_models/model_"+str(i)+".ckpt"
@@ -24,7 +17,6 @@ def predict(params):
             nfeat=2
         else:
             nfeat=3
-        
         model = GCN(nfeat,dropout=0.3)
         model.load_state_dict(torch.load(model_path))
         model = model.to(device)

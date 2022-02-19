@@ -80,17 +80,14 @@ def ranking():
         ranked_cluster_score = [i[0] for i in cluster_score]
         TP_list = np.zeros(len(label))
         for idx,rank in enumerate(ranked_cluster_score):
-            #TP_list=np.zeros(len(label))
             idx_lst = [(j,idx+1) for j,x in enumerate(list(cluster_label)) if x == rank ]
             for item in idx_lst:
                 TP_list[atoms[item[0]]-1] = item[1]
         num = len(np.argwhere(TP_list>0))
         if num < 10:
             bad_case.append(id[:-4])
-        # if id in ['1014.npy','1016.npy','1034.npy' ,'154.npy' ,'187.npy' ,'191.npy' ,'273.npy' ,'290.npy' ,'356.npy' ,'367.npy' ,'443.npy' ,'5.npy' ,'559.npy' ,'620.npy' ,'657.npy' ,'691.npy','72.npy' ,'720.npy' ,'776.npy' ,'780.npy' ,'879.npy' ,'881.npy' ,'973.npy']:  
         output_lines = ''
         input_path = os.path.join(input_dir,id[:-4]+'/structure.pqr')
-        #output_path = os.path.join(input_dir,id[:-4]+'/structure.pqr')
         output_path = os.path.join(output_dir,'structure.pqr')
 
         with open(input_path,'r') as file:
@@ -104,7 +101,6 @@ def ranking():
             output_lines += new_row
         with open(output_path,'w') as file:
             file.write(output_lines)
-    print(bad_case)
     return bad_case
 
         
