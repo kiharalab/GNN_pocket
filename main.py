@@ -22,7 +22,7 @@ if __name__ == "__main__":
         #output_dir = "../dataset/test_processed/"
         if not os.path.exists(output_dir):
             os.mkdir(output_dir)
-            extract_dataset(params,input_dir,output_dir)
+            extract_dataset(input_dir,output_dir)
         predict(params)
         ensemble(params)
         bad_case = ranking()
