@@ -72,6 +72,13 @@ python3 main.py -h:
 python main.py --mode=1 --gpu=1 --test_dir="./dataset/test" --test_odir="./dataset/test_processed"
 ```
 
+### Running Time
+
+We strongly recommend you to run on a machine with a SSD, the overall running time for an example would be around 2 minutes with a SSD.
+
+But the running time would be much longer without SSD, it is possible to over 10 minutes in some cases with large structures.
+
+
 ## Output file
 
 The output files are saved ad final_pred which is located at the parent dir of GNN_pocket.
@@ -82,8 +89,8 @@ cd 23
 ```
 structure.pqr: the prediction is at column 9, which 1.000 means pocket 1, 0.000 means not a pocket atom.
 ## Visualization
-Two examples about pocktes, the first one is example 23 from test set, the second one is example 103 from validation set.
+Two examples about pocktes, the first one is example 23 from test set, the second one is example 142 from validation set.
 <figure class="half">
-    <img src="https://github.com/Zhang038/GNN_pocket/blob/master/example/23_pred.png" width="500"/>
-    <img src="https://github.com/Zhang038/GNN_pocket/blob/master/example/103_pred.png" width="500"/>
+    <img src="https://github.com/kiharalab/GNN_pocket/blob/master/examples/pred_23.png" width="500"/>
+    <img src="https://github.com/kiharalab/GNN_pocket/blob/master/examples/pred_142.png" width="500"/>
 </figure>
