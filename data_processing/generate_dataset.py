@@ -57,8 +57,6 @@ def extract_dataset(input_dir,output_dir):
         edges = np.where(edges<0,0,1)
         np.save(os.path.join(edge_water_dir,str(id)+'.npy'),edges)
         
-        
-
         # convert pqr to pdb
         pdb_write_dir = os.path.join(output_dir,'pdb')
         if not os.path.exists(pdb_write_dir):
@@ -117,17 +115,6 @@ def extract_dataset(input_dir,output_dir):
         ghecom_feat = ghecom_feat.reshape(-1,1)
 
         #prepare visgrid 8A visibility features
-        distance = np.where(distance>8,0,1)
-        
-        visgird_8A_feat = np.sum(distance, axis=1)
-        max_value = np.sum(visgird_8A_feat)
-        nor_visgird_8A_feat = (visgird_8A_feat/(max_value+1e-9)).reshape(-1,1)
-        visgird_8A_feat = visgird_8A_feat.reshape(-1,1)
-
-        #combine all features
-        feat = np.concatenate((vis_atom_feat,ghecom_feat,visgird_8A_feat),axis=1).reshape(-1,3)
-        #print(feat.shape)
-        np.save(os.path.join(feat_dir,str(id)+'.npy'),feat)
 
         #save vis_8 feature
         tools_dir = './tools'
@@ -162,11 +149,18 @@ def extract_dataset(input_dir,output_dir):
 
         voxels = np.array(voxels)
         atoms = np.array(atoms)
-        distances = distance.cdist(atoms,voxels)
+        distances = cdist(atoms,voxels)
  
         distances = np.where(distances>8,0,1)
         voxel_feature = np.sum(distances, axis=1)
         max_value = np.sum(voxel_feature)
         voxel_feature = voxel_feature/(max_value+1e-9)
-        np.save(os.path.join(nor_vis_8_dir,str(id)+'.npy'),voxel_feature)
 
+        visgird_8A_feat = np.sum(distances, axis=1)
+        visgird_8A_feat = visgird_8A_feat.reshape(-1,1)
+
+        #combine all features
+        feat = np.concatenate((vis_atom_feat,ghecom_feat,visgird_8A_feat),axis=1).reshape(-1,3)
+        #print(feat.shape)
+        np.save(os.path.join(feat_dir,str(id)+'.npy'),feat)
+        np.save(os.path.join(nor_vis_8_dir,str(id)+'.npy'),voxel_feature)

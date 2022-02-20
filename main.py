@@ -1,4 +1,5 @@
 #from predict.ensemble import ensemble
+from numpy import extract
 from utils.argparser import argparser
 import os
 
@@ -6,7 +7,7 @@ import os
 from data_processing.generate_dataset import extract_dataset
 from predict.predict import predict
 from predict.visgrid_pred import visgrid_pred
-from data_processing.extract_visibility import extract_visibility
+from data_processing.generate_dataset import extract_dataset
 
 from predict.ensemble import ensemble
 

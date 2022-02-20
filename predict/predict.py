@@ -52,14 +52,14 @@ def predict(params):
             output = model(feat,adj)
             output = output.detach().cpu().numpy().reshape(-1)
 
-            pdb = '../dataset/test_processed/pdb/' + str(id[:-4])+'.pdb'
+            pdb = './dataset/test_processed/pdb/' + str(id[:-4])+'.pdb'
             pred_lines = '' 
             with open(pdb,'r') as file:
                 lines = file.readlines()
             for idx in range(len(output)):
                 if output[idx]>=0.5:
                     pred_lines +=lines[idx].strip('\n') + ' ' + str(output[idx]) + '\n'
-            odir = "../test_prediction/pdb_model_"+str(i)
+            odir = "./test_prediction/pdb_model_"+str(i)
             odir = os.path.abspath(odir)
             if not os.path.exists(odir):
                 os.makedirs(odir)
@@ -67,7 +67,7 @@ def predict(params):
             with open(ofile,'w') as file:
                 file.write(pred_lines)
             
-            odir = "../test_prediction/model_"+str(i)
+            odir = "./test_prediction/model_"+str(i)
             odir = os.path.abspath(odir)
             if not os.path.exists(odir):
                 os.makedirs(odir)

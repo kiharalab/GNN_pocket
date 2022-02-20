@@ -7,10 +7,10 @@ from sklearn.metrics import accuracy_score,precision_score,recall_score,f1_score
 
 def ensemble_results(id):
 
-    model_3_dir = '../test_prediction/model_3'
-    model_5_dir = '../test_prediction/model_5'
-    model_7_dir = '../test_prediction/model_7'
-    model_10_dir = '../test_prediction/model_10'
+    model_3_dir = './test_prediction/model_3'
+    model_5_dir = './test_prediction/model_5'
+    model_7_dir = './test_prediction/model_7'
+    model_10_dir = './test_prediction/model_10'
 
     model_3_pred =  np.load(os.path.join(model_3_dir,id)).reshape(-1,1)
     model_5_pred =  np.load(os.path.join(model_5_dir,id)).reshape(-1,1)
@@ -25,14 +25,14 @@ def ensemble(params):
     feat_path = os.path.join(params['test_odir'],'feat')
     dirs = os.listdir(feat_path)
 
-    avg_dir = "../test_prediction/avg_pred"
-    avg_pdb_dir = "../test_prediction/avg_pdb_pred"
+    avg_dir = "./test_prediction/avg_pred"
+    avg_pdb_dir = "./test_prediction/avg_pdb_pred"
     if not os.path.exists(avg_dir):
         os.mkdir(avg_dir)
     if not os.path.exists(avg_pdb_dir):
         os.mkdir(avg_pdb_dir)
     for id in dirs:
-        pdb = '../dataset/test_processed/pdb/' + str(id[:-4])+'.pdb'
+        pdb = './dataset/test_processed/pdb/' + str(id[:-4])+'.pdb'
         pred_lines = '' 
         with open(pdb,'r') as file:
             lines = file.readlines()
