@@ -1,6 +1,5 @@
 import os
 
-
 def pqr2pdb_vis(ifile,ofile):
     with open(ifile,'r') as file:
         lines = file.readlines()

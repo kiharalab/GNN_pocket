@@ -1,7 +1,6 @@
 import torch
 import numpy as np
 import os
-import numpy  as np
 from scipy.sparse import diags
 from utils.normalize import normalize
 from model.model import GCN

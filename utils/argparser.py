@@ -1,7 +1,6 @@
-import parser
 import argparse
 
-from click import argument
+
 
 def argparser():
     parser = argparse.ArgumentParser()

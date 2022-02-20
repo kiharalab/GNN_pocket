@@ -1,9 +1,6 @@
-from audioop import avg
 import os
-import pickle
-from matplotlib.pyplot import axis
 import numpy as np
-from sklearn.metrics import accuracy_score,precision_score,recall_score,f1_score
+
 
 def ensemble_results(id):
 

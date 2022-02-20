@@ -1,5 +1,4 @@
 import os
-from matplotlib.pyplot import axis
 import numpy as np
 from scipy.spatial.distance import cdist
 from utils.pqr2pdb import pqr2pdb
