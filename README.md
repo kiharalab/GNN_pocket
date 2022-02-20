@@ -94,3 +94,12 @@ Two examples about pocktes, the first one is example 23 from test set, the secon
     <img src="https://github.com/kiharalab/GNN_pocket/blob/master/examples/pred_23.png" width="500"/>
     <img src="https://github.com/kiharalab/GNN_pocket/blob/master/examples/pred_142.png" width="500"/>
 </figure>
+## Referece
+
+- [1] [tools:pqr2pdb](https://github.com/hleonov/bin/blob/master/pqr2pdb.py)
+- [2] [tools:VisGrid](https://kiharalab.org/VisGrid/)
+- [3] [tools:ghecom](https://pdbj.org/ghecom/)
+- [4] [Li, Bin, et al. "Characterization of local geometry of protein surfaces with the visibility criterion." *Proteins: Structure, Function, and Bioinformatics* 71.2 (2008): 670-683.](https://onlinelibrary.wiley.com/doi/abs/10.1002/prot.21732?casa_token=vfhZxgyYvAUAAAAA:FwaQlnRvl1z-jSwfHW_DLb7yjwRn5FXZklyxIyY18mWaAfEjVBDXnv86aLr32z6Jtj8jya4VILWVA-Y)
+- [5] [Kawabata, Takeshi. "Detection of multiscale pockets on protein surfaces using mathematical morphology." *Proteins: Structure, Function, and Bioinformatics* 78.5 (2010): 1195-1211.](https://onlinelibrary.wiley.com/doi/abs/10.1002/prot.22639?casa_token=gZElgIqLTX4AAAAA:ioK8V7Ajbzk1Vl9qsvpz8nsg6_6fKZanm6zdoKh9_QM6TJ-hQmVdVpWPvThhwJle9FShzSLkOz00VQc)
+- [6] [Kipf, Thomas N., and Max Welling. "Semi-supervised classification with graph convolutional networks." *arXiv preprint arXiv:1609.02907* (2016).](https://arxiv.org/pdf/1609.02907.pdf)
+- [7][Wang, Xiao, Sean T. Flannery, and Daisuke Kihara. "Protein docking model evaluation by graph neural networks." *Frontiers in Molecular Biosciences* 8 (2021): 402.](https://www.frontiersin.org/articles/10.3389/fmolb.2021.647915/full)
