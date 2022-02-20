@@ -17,7 +17,7 @@ def predict(params):
             nfeat=2
         else:
             nfeat=3
-        model = GCN(nfeat,dropout=0.3)
+        model = GCN(nfeat,dropout=0.0)
         model.load_state_dict(torch.load(model_path))
         model = model.to(device)
         model.eval()

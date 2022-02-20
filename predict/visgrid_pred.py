@@ -14,8 +14,8 @@ def pqr2pdb_vis(ifile,ofile):
 
 def visgrid_pred(bad_case,params):
     dir = params['test_odir']
-    vis_pdb_dir = "./dataset/test_processed/vis_pdb"
-    output_vis_dir = "./dataset/test_processed/output_vis"
+    vis_pdb_dir = "../dataset/test_processed/vis_pdb"
+    output_vis_dir = "../dataset/test_processed/output_vis"
     if not os.path.exists(vis_pdb_dir):
         os.mkdir(vis_pdb_dir)
     if not os.path.exists(output_vis_dir):
@@ -35,7 +35,7 @@ def visgrid_pred(bad_case,params):
         pocket_1 = lines[2].strip().split(',')
         pocket_2 = lines[4].strip().split(',')
         pocket_3 = lines[6].strip().split(',')
-        input_dir = "./dataset/test/"
+        input_dir = "../dataset/test/"
         output_dir = os.path.join("../final_pred",str(id))
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)

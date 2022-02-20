@@ -8,10 +8,11 @@ from sklearn.cluster import AgglomerativeClustering
 
 def ranking():
     cluster_model = AgglomerativeClustering(n_clusters=None,distance_threshold=12,linkage='single')
-    label_dir = './dataset/test_processed/label'
-    input_dir = "./dataset/test/"
-    pred_dir = './test_prediction/avg_pdb_pred'
+    label_dir = '../dataset/test_processed/label'
+    input_dir = "../dataset/test/"
+    pred_dir = '../test_prediction/avg_pdb_pred'
     dirs = os.listdir(label_dir)
+    #dirs = ['949.npy','973.npy','994.npy']
     bad_case = []
     for id in dirs:
         output_dir = os.path.join("../final_pred",id[:-4])
