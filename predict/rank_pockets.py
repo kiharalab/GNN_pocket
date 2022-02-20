@@ -15,7 +15,7 @@ def ranking():
 
     bad_case = []
     for id in dirs:
-        output_dir = os.path.join("../final_pred",id[:-4])
+        output_dir = os.path.join("./final_pred",id[:-4])
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
         pred_path = os.path.join(pred_dir,id[:-4]+'.pdb')
