@@ -60,7 +60,8 @@ tqdm==4.62.3
 python3 main.py -h:
   --mode                Running Mode
   --gpu                 Specify the gpu to use
-  --test_dir            Specify the directory of original dataset, the structure under this dataset should be "./id/structure.pqr'
+  --test_dir            Specify the directory of original dataset, the structure under this dataset 
+                        should be "./id/structure.pqr"
   --test_odir           Specify the directory that you want to save the processed data
 ```
 
