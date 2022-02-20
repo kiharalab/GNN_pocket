@@ -10,7 +10,7 @@
 </a>      <br>
 GNN_pocket  is a tool to predict the pocket regions in a protein structure, where the residues that are at the edges of a pocket get tagged as active.
 
-Copyright (C) 2021 Yuanyuan Zhang, Xiao Wang, Charles Christoffer, & Daisuke Kihara, and Purdue University.
+Copyright (C) 2022 Yuanyuan Zhang, Xiao Wang, Charles Christoffer, & Daisuke Kihara, and Purdue University.
 
 License: GPL v3 for academic use. (For commercial use, please contact us for different licensing.)
 
@@ -26,7 +26,6 @@ Contact: Daisuke Kihara (dkihara@purdue.edu)
 git clone https://github.com/kiharalab/GNN_pocket
 cd GNN_pocket
 ```
-
 ### 3. Build dependencies.
 
 You have two options to install dependency on your computer, install requirements.txt or install dependencies one by one:
@@ -65,17 +64,19 @@ python3 main.py -h:
   --test_odir          specify the directory that you want to save the processed data
 ```
 
+
 ### Running Example
 
 ```
-python main.py --mode=1 --gpu=1 --test_dir="../dataset/test" --test_odir="../dataset/test_processed"```T
+python main.py --mode=1 --gpu=1 --test_dir="../dataset/test" --test_odir="../dataset/test_processed"
 ```
 
 ## Output file
 
-Structure.pqr: the prediction is at column 9, which 1.000 means pocket 1, 0.000 means not a pocket atom.
-
+id_structure.pqr: the prediction is at column 9, which 1.000 means pocket 1, 0.000 means not a pocket atom.
 ## Visualization
-
-1 example in test set for visualization: 23_structure.pqr
-![image](https://github.com/Zhang038/GNN_pocket/blob/master/example/23_pred.png)
+Two examples about pocktes, the first one is example 23 from test set, the second one is example 103 from validation set.
+<figure class="half">
+    <img src="https://github.com/Zhang038/GNN_pocket/blob/master/example/23_pred.png" width="500"/>
+    <img src="https://github.com/Zhang038/GNN_pocket/blob/master/example/103_pred.png" width="500"/>
+</figure>
