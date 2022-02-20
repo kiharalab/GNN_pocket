@@ -96,7 +96,7 @@ Two examples about pocktes, the first one is example 23 from test set, the secon
 </figure>
 
 
-## Referece
+## References
 
 - [1] [tools:pqr2pdb](https://github.com/hleonov/bin/blob/master/pqr2pdb.py)
 - [2] [tools:VisGrid](https://kiharalab.org/VisGrid/)
