@@ -24,7 +24,6 @@ def ensemble_results(id):
 def ensemble(params):
     feat_path = os.path.join(params['test_odir'],'feat')
     dirs = os.listdir(feat_path)
-    #dirs = ['1014.npy','1016.npy','1034.npy' ,'154.npy' ,'187.npy' ,'191.npy' ,'273.npy' ,'290.npy' ,'356.npy' ,'367.npy' ,'443.npy' ,'5.npy' ,'559.npy' ,'620.npy' ,'657.npy' ,'691.npy','72.npy' ,'720.npy' ,'776.npy' ,'780.npy' ,'879.npy' ,'881.npy' ,'973.npy']
 
     avg_dir = "../test_prediction/avg_pred"
     avg_pdb_dir = "../test_prediction/avg_pdb_pred"
@@ -38,7 +37,7 @@ def ensemble(params):
         with open(pdb,'r') as file:
             lines = file.readlines()
         avg_pred = ensemble_results(id)
-        avg_path = os.path.join(avg_dir,id+'.npy')
+        avg_path = os.path.join(avg_dir,id)
         np.save(avg_path,avg_pred)
         pred_lines = '' 
         for idx in range(len(avg_pred)):

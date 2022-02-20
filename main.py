@@ -6,6 +6,7 @@ import os
 from data_processing.generate_dataset import extract_dataset
 from predict.predict import predict
 from predict.visgrid_pred import visgrid_pred
+from data_processing.extract_visibility import extract_visibility
 
 from predict.ensemble import ensemble
 

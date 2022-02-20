@@ -128,30 +128,45 @@ def extract_dataset(input_dir,output_dir):
         feat = np.concatenate((vis_atom_feat,ghecom_feat,visgird_8A_feat),axis=1).reshape(-1,3)
         #print(feat.shape)
         np.save(os.path.join(feat_dir,str(id)+'.npy'),feat)
+
         #save vis_8 feature
-        np.save(os.path.join(nor_vis_8_dir,str(id)+'.npy'),nor_visgird_8A_feat)
-
-
-
-
-
+        tools_dir = './tools'
+        vis_pred_exe = os.path.join(tools_dir,'VisGrid/VisGrid')
+        os.system("chmod 777 "+ vis_pred_exe)
+        output_lines = os.popen(vis_pred_exe+ ' '+ '-v'+ ' ' +path).readlines()
+        #print(output_lines)
+        #exit(0)
+        voxels = []
+        for i in range(2,len(output_lines)):
+            if "Voxels:" in output_lines[i]:
+                continue
+            line = output_lines[i].replace('\n','').replace('\t','')
+            if line=='':
+                continue
+            line = np.array([float(i) for i in line.split(' ')])
+            voxels.append(line)
+        atoms = []
+        with open(path,'r') as file:
+            lines = file.readlines()
+        for line in lines:
+            line = line.strip('\n')
+            line = line.replace('-',' ')
+            line = line.split(' ')
+            line= [i for i in line if(len(str(i))!=0)]
+            x = float(line[5])
+            #print(id)
+            y = float(line[6])
             
+            z = float(line[7])
+            atoms.append(np.array([x,y,z]))
 
-        
-
-
-
-
-        
-
-
-
-
-
-
-
-        
-        
-
-        
+        voxels = np.array(voxels)
+        atoms = np.array(atoms)
+        distances = distance.cdist(atoms,voxels)
+ 
+        distances = np.where(distances>8,0,1)
+        voxel_feature = np.sum(distances, axis=1)
+        max_value = np.sum(voxel_feature)
+        voxel_feature = voxel_feature/(max_value+1e-9)
+        np.save(os.path.join(nor_vis_8_dir,str(id)+'.npy'),voxel_feature)
 
