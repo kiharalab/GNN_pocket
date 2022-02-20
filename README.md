@@ -1,5 +1,4 @@
 # GNN_pocket
-The project of pocket prediction based on GNN model
 
 <a href="https://github.com/marktext/marktext/releases/latest">
    <img src="https://img.shields.io/badge/GNN_pocket-v1.0.0-green">
@@ -11,7 +10,7 @@ The project of pocket prediction based on GNN model
 </a>      <br>
 GNN_pocket  is a tool to predict the pocket regions in a protein structure, where the residues that are at the edges of a pocket get tagged as active.
 
-Copyright (C) 2021 Yuanyuan Zhang, Xiao Wang, Charles Christoffer, & Daisuke Kihara, and Purdue University.
+Copyright (C) 2022 Yuanyuan Zhang, Xiao Wang, Charles Christoffer, & Daisuke Kihara, and Purdue University.
 
 License: GPL v3 for academic use. (For commercial use, please contact us for different licensing.)
 
@@ -47,7 +46,10 @@ python main.py --mode=1 --gpu=1 --test_dir="../dataset/test" --test_odir="../dat
 
 ## Output file
 
-Structure.pqr: the prediction is at column 9, which 1.000 means pocket 1, 0.000 means not a pocket atom.
-
-
-
+id_structure.pqr: the prediction is at column 9, which 1.000 means pocket 1, 0.000 means not a pocket atom.
+## Visualization
+Two examples about pocktes, the first one is example 23 from test set, the second one is example 103 from validation set.
+<figure class="half">
+    <img src="https://github.com/Zhang038/GNN_pocket/blob/master/example/23_pred.png" width="500"/>
+    <img src="https://github.com/Zhang038/GNN_pocket/blob/master/example/103_pred.png" width="500"/>
+</figure>
