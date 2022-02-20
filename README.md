@@ -81,10 +81,10 @@ But the running time would be much longer without SSD, it is possible to over 10
 
 ## Output file
 
-The output files are saved ad final_pred which is located at the parent dir of GNN_pocket.
+The output files are saved as final_pred which is at the same directory.
 For example:
 ```
-cd ../final_pred
+cd ./final_pred
 cd 23
 ```
 structure.pqr: the prediction is at column 9, which 1.000 means pocket 1, 0.000 means not a pocket atom.
